@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<HTML>
+	<head> 
+		<meta charset="utf-8">
+		<title>天气测试DEMO</title>
+	</head>
+	<body>
+	<select id="weather" name="weather">
+		<option>请选择</option>
+		<option value="济南">济南</option>
+		<option value="泰安">泰安</option>
+		<option value="潍坊">潍坊</option>
+		<option value="临沂">临沂</option>
+		<option value="新泰">新泰</option>
+		<option value="威海">威海</option>
+		<option value="长春">长春</option>
+		<option value="三亚">三亚</option>
+		<option value="北京">北京</option>
+		<option value="上海">上海</option>
+	</select><br><br>
+   <div id="box">
+     <ul id="con"></ul>
+   </div>
+	</body>
+	
+<script src="./jquery-2.1.4.js"></script>
+<script>
+//获取选中的城市
+$("#weather").change(function(){
+	var checkValue=$("#weather").val();
+	var url = "./weather.php";
+	$.post(url,{weather:checkValue},function(res){
+		if (res.status == 0){
+			var con = '';
+			 $.each(res.info, function(i, j){
+			 	 con += "<li>日期："+j.date+"</li>";
+                 con += "<li>最高温："+j.high+"</li>";
+                 con += "<li>风："+j.fengli+"</li>";
+                 con += "<li>最低温："+j.low+"</li>";
+            });
+			$("#con").html(con);
+		}
+	},'json')
+
+});
+</script>
+</html>
+
+
+
+
+
+
